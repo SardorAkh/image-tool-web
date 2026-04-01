@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <title>Image Tool</title>
 <style>
   :root {
@@ -84,8 +83,21 @@
   .summary-total { font-size: 20px; font-weight: 600; color: var(--success); line-height: 1.2; }
   .summary-detail { font-size: 11px; color: var(--text3); margin-top: 4px; }
   .summary-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text3); margin-bottom: 6px; }
+  .preset-btns { display: flex; gap: 3px; background: var(--surface2); border-radius: var(--radius-sm); padding: 2px; }
+  .preset-btns button { flex: 1; padding: 4px 0; font-size: 11px; font-weight: 500; border: none; border-radius: 4px; background: transparent; color: var(--text2); cursor: pointer; transition: all .15s; }
+  .preset-btns button.active { background: var(--surface); color: var(--text); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+  .inline-inputs { display: flex; align-items: center; gap: 6px; }
+  .input-pair { display: flex; align-items: center; gap: 4px; flex: 1; }
+  .section-lbl { font-size: 11px; color: var(--text3); font-weight: 500; }
+  .num-input { width: 100%; padding: 4px 6px; font-size: 12px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface); color: var(--text); outline: none; font-family: inherit; }
+  .num-input:focus { border-color: var(--accent); }
+  .input-x { color: var(--text3); font-size: 12px; }
+  .anchor-grid { display: grid; grid-template-columns: repeat(3, 22px); gap: 3px; }
+  .anchor-grid button { width: 22px; height: 22px; border: 1px solid var(--border); border-radius: 3px; background: var(--surface2); cursor: pointer; transition: all .1s; padding: 0; }
+  .anchor-grid button.active { background: var(--accent); border-color: var(--accent); }
+  .anchor-grid button:hover { border-color: var(--accent); }
 </style>
-  <script type="module" crossorigin src="./assets/index-PRWJI0sc.js"></script>
+  <script type="module" crossorigin src="./assets/index-DSBPs8Yc.js"></script>
 </head>
 <body>
 <div class="app">
@@ -103,6 +115,49 @@
     <div class="section-title">Settings</div>
     <div class="settings">
       <div class="setting-row">
+        <label class="checkbox-row"><input type="checkbox" id="enable-resize"> Resize</label>
+      </div>
+      <div id="resize-settings" style="display:none">
+        <div class="setting-row">
+          <div class="preset-btns" id="resize-presets">
+            <button data-pct="25">25%</button>
+            <button data-pct="50">50%</button>
+            <button data-pct="75">75%</button>
+            <button data-pct="100" class="active">100%</button>
+          </div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label"><span>Scale</span><span id="resize-val">100%</span></div>
+          <input type="range" id="resize-pct" min="1" max="100" step="1" value="100">
+        </div>
+      </div>
+
+      <div class="setting-row">
+        <label class="checkbox-row"><input type="checkbox" id="enable-canvas"> Extend canvas</label>
+      </div>
+      <div id="canvas-settings" style="display:none">
+        <div class="setting-row inline-inputs">
+          <div class="input-pair"><label class="section-lbl">W</label><input type="number" id="canvas-w" min="1" max="8192" value="0" class="num-input"></div>
+          <span class="input-x">&times;</span>
+          <div class="input-pair"><label class="section-lbl">H</label><input type="number" id="canvas-h" min="1" max="8192" value="0" class="num-input"></div>
+        </div>
+        <div class="setting-row">
+          <div class="setting-label"><span>Anchor</span></div>
+          <div class="anchor-grid" id="anchor-grid">
+            <button data-a="tl" title="Top left"></button>
+            <button data-a="tc" title="Top center"></button>
+            <button data-a="tr" title="Top right"></button>
+            <button data-a="ml" title="Middle left"></button>
+            <button data-a="mc" class="active" title="Center"></button>
+            <button data-a="mr" title="Middle right"></button>
+            <button data-a="bl" title="Bottom left"></button>
+            <button data-a="bc" title="Bottom center"></button>
+            <button data-a="br" title="Bottom right"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="setting-row" style="margin-top:8px">
         <div class="setting-label"><span>Output format</span></div>
         <div class="format-btns" id="format-btns">
           <button data-fmt="png" class="active">PNG</button>
